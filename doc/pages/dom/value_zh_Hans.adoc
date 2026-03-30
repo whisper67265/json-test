@@ -9,55 +9,55 @@ Official repository: https://github.com/boostorg/json
 ////
 
 [#dom_value]
-= `value` JSON documents are represented in memory as instances of <<ref_value>>: a {req_Regular} type which satisfies {req_DefaultConstructible}, {req_CopyConstructible}, {req_CopyAssignable}, {req_MoveConstructible}, {req_MoveAssignable}, and many of the requirements of allocator-aware containers. It is implemented as a https://en.wikipedia.org/wiki/Tagged_union[__variant__] internally, and can dynamically store any of the six defined JSON value types:
+= `value` JSON文档在内存中表示为&lt;<ref_value>&gt;的实例：一种{req_Regular}类型，满足{req_DefaultConstructible}、{req_CopyConstructible}、{req_CopyAssignable}、{req_MoveConstructible}、{req_MoveAssignable}以及许多分配器感知容器的要求。它在内部实现为https://en.wikipedia.org/wiki/Tagged_union[__变体__]，并且可以动态存储以下六种已定义的JSON值类型：</ref_value>
 
-* **null**: A
-https://en.cppreference.com/w/cpp/utility/variant/monostate[__monostate__] value, equivalent to `nullptr`.
+* **空值**：一种
+https://en.cppreference.com/w/cpp/utility/variant/monostate[__monostate__]值，等同于`nullptr`。
 
-* **boolean**: A boolean: either `true` or `false`.
+* **布尔值**：布尔值，为`true`或`false`。
 
-* **number**: An integral or floating point value.
+* **数值**：整型或浮点型数值。
 
-* **string**: A sequence of zero or more Unicode characters,
-similar to {std_string}.
+* **字符串**：由零个或多个Unicode字符组成的序列，
+类似于{std_string}。
 
-* **array**: An ordered list of values, like {std_vector}.
+* **数组**：值的有序列表，类似于{std_vector}。
 
-* **object**: A collection of name/value pairs, also known as an
-https://en.wikipedia.org/wiki/Associative_array[__associative array__].
+* **对象**：名称/值对的集合，也称为
+https://en.wikipedia.org/wiki/Associative_array[__关联数组__]。
 
-== Working With Values
-A <<ref_value>> constructed from `nullptr` or default constructed represents a null JSON element:
+== 使用值
+从`nullptr`构造或默认构造的&lt;<ref_value>&gt;表示一个空的JSON元素：</ref_value>
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_1,indent=0]
 ----
 
-The member function <<ref_value_kind,`value::kind`>> may be used to query the kind stored in the value. Alternatively, member functions like <<ref_value_is_object,`value::is_object`>> <<ref_value_is_number,`value::is_number`>> may be used to check whether or not the value is a particular kind:
+成员函数&lt;<ref_value_kind,`value::kind`>&gt;可用于查询值中存储的种类。或者，可以使用诸如&lt;<ref_value_is_object,`value::is_object`>&gt;、&lt;<ref_value_is_number,`value::is_number`>&gt;之类的成员函数来检查值是否为特定种类：</ref_value_is_number,`value::is_number`></ref_value_is_object,`value::is_object`></ref_value_kind,`value::kind`>
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_2,indent=0]
 ----
 
-Functions like <<ref_value_if_object,`value::if_object`>> actually return a pointer to the object if the value is an object, otherwise they return null. This allows them to be used both in boolean contexts as above, and in assignments or conditional expressions to capture the value of the pointer:
+诸如&lt;<ref_value_if_object,`value::if_object`>&gt;之类的函数，如果值是一个对象，则返回指向该对象的指针，否则返回空指针。这使得它们既可以在如上所述的布尔上下文中使用，也可以在赋值或条件表达式中用于捕获指针的值：</ref_value_if_object,`value::if_object`>
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_3,indent=0]
 ----
 
-After a <<ref_value>> is constructed, its kind can change depending on what is assigned to it, or by calling functions such as <<ref_value_emplace_array,`value::emplace_array`>> or <<ref_value_emplace_bool,`value::emplace_bool`>>. If the assignment is successful, in other words it completes without any exceptions then the value is replaced. Otherwise, the value is unchanged. All operations which can fail to modify a value offer the strong exception safety guarantee.
+构造&lt;<ref_value>&gt;之后，其种类可以根据赋值内容或通过调用&lt;<ref_value_emplace_array,`value::emplace_array`>&gt;或&lt;<ref_value_emplace_bool,`value::emplace_bool`>&gt;等函数而改变。如果赋值成功（即未引发任何异常完成），则该值将被替换。否则，该值保持不变。所有可能修改值失败的操作都提供强异常安全保证。</ref_value_emplace_bool,`value::emplace_bool`></ref_value_emplace_array,`value::emplace_array`></ref_value>
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_4,indent=0]
 ----
 
-The following table shows all of the ways to determine and access the contents of a <<ref_value>>:
+下表展示了确定和访问&lt;<ref_value>&gt;内容的所有方法：</ref_value>
 
-.<<ref_value>> Accessors [%autowidth,cols=8] |=== |Kind |Representation |Emplacement |Kind Test |Pointer Access |`result` Access |Checked Access |Unchecked Access
+.&lt;<ref_value>&gt;访问器 [%autowidth,cols=8] |=== |种类 |表示 |原位构造 |种类测试 |指针访问 |`result`访问 |受检访问 |未受检访问</ref_value>
 
 |<<ref_kind,`kind::array`>>
 |<<ref_array>>
@@ -126,11 +126,11 @@ The following table shows all of the ways to determine and access the contents o
 |https://en.cppreference.com/w/cpp/language/nullptr[`std::nullptr_t`]
 |<<ref_value_emplace_null>>
 |<<ref_value_is_null>>
-^|&mdash; |<<ref_value_try_as_null>> ^|&mdash; ^|&mdash;
+^|— |&lt;<ref_value_try_as_null>&gt; ^|— ^|—</ref_value_try_as_null>
 
 |===
 
-The emplace members of <<ref_value>> return a typed reference to the underlying representation. For example, the call to <<ref_value_emplace_string,`value::emplace_string`>> in the previous example returns a <<ref_string,`string&`>>. This table shows the underlying type for each kind:
+&lt;<ref_value>&gt;的原位构造成员函数返回对底层表示的类型化引用。例如，前例中调用&lt;<ref_value_emplace_string,`value::emplace_string`>&gt;会返回一个&lt;<ref_string,`string&`>&gt;。下表展示了每种类型对应的底层类型：</ref_string,`string&`></ref_value_emplace_string,`value::emplace_string`></ref_value>
 
 |===
 |Kind|Type|Description
@@ -138,17 +138,17 @@ The emplace members of <<ref_value>> return a typed reference to the underlying 
 | <<ref_kind,`kind::object`>>
 | <<ref_object>>
 | An associative array of string keys mapping to <<ref_value>> elements with an
-interface similar to {std_unordered_map}, that remembers insertion order.
+接口类似于{std_unordered_map}，且会记住插入顺序。
 
 | <<ref_kind,`kind::array`>>
 | <<ref_array>>
 | An ordered list of <<ref_value>> elements with an interface similar to
-{std_vector}.
+{std_vector}。
 
 | <<ref_kind,`kind::string`>>
 | <<ref_string>>
 | A https://en.wikipedia.org/wiki/UTF-8[__UTF-8__] encoded
-https://en.wikipedia.org/wiki/Unicode[Unicode] https://en.wikipedia.org/wiki/String_(computer_science)[string] of characters with an interface similar to {std_string}.
+https://en.wikipedia.org/wiki/Unicode[Unicode] https://en.wikipedia.org/wiki/String_(computer_science)[字符串]，其接口类似于{std_string}。
 
 | <<ref_kind,`kind::int64`>>
 | `std::int64_t`
@@ -167,25 +167,25 @@ https://en.wikipedia.org/wiki/Unicode[Unicode] https://en.wikipedia.org/wiki/Str
 | A `bool` holding `true` or `false`.
 
 | <<ref_kind,`kind::null`>>
-^| &mdash; | A monostate value representing null. |===
+^| — | 表示空值的单态值。 |===
 
-The return value from emplace can be used to perform assignment or to capture a reference to the underlying element for later inspection or modification:
+原位构造的返回值可用于执行赋值，或捕获底层元素的引用以供后续检查或修改：
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_5,indent=0]
 ----
 
-If the <<ref_kind>> of a <<ref_value>> is known, functions such as <<ref_value_as_bool,`value::as_bool`>> or <<ref_value_as_string,`value::as_string`>> may be used to obtain a reference to the underlying representation without changing the existing value:
+若已知&lt;<ref_value>&gt;的&lt;<ref_kind>&gt;，可使用&lt;<ref_value_as_bool,`value::as_bool`>&gt;或&lt;<ref_value_as_string,`value::as_string`>&gt;等函数获取底层表示的引用，而无需更改现有值：</ref_value_as_string,`value::as_string`></ref_value_as_bool,`value::as_bool`></ref_kind></ref_value>
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_6,indent=0]
 ----
 
-However, as shown above these functions throw an exception if the kind in the <<ref_value>> does not match the kind denoted by the function signature. This can be used as a concise form of validation: access values as if they were the right type, but handle the resulting exception indicating if the schema of the JSON is not valid.
+但如上所示，若&lt;<ref_value>&gt;中的种类与函数签名表示的种类不匹配，这些函数将抛出异常。这可用作简洁的验证方式：将值当作正确类型访问，但需处理因JSON模式无效引发的异常。</ref_value>
 
-We can query a value for its underlying representation of a particular kind in a way that does not throw exceptions by requesting a pointer which may be null, instead of a reference. Here we use <<ref_value_if_string,`value::if_string`>> to conditionally perform an assignment without using exceptions:
+可通过请求可能为空的指针（而非引用）来无异常地查询特定种类的底层表示。此处使用&lt;<ref_value_if_string,`value::if_string`>&gt;在无异常的情况下条件性执行赋值：</ref_value_if_string,`value::if_string`>
 
 [source]
 ----
@@ -205,12 +205,12 @@ include::../../../test/snippets.cpp[tag=snippet_value_8,indent=0]
 ----
 ====
 
-Functions returning {ref_result} allow you to use both approaches:
+返回{ref_result}的函数允许同时使用两种方法：
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_value_9,indent=0]
 ----
 
-=== Formatted Output
-When a <<ref_value>> is formatted to a {std_ostream}, the result is serialized JSON as if by calling <<ref_serialize>>.
+=== 格式化输出
+当&lt;<ref_value>&gt;被格式化输出到{std_ostream}时，结果等同于调用&lt;<ref_serialize>&gt;序列化的JSON。</ref_serialize></ref_value>
