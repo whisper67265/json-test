@@ -10,16 +10,16 @@ Official repository: https://github.com/boostorg/json
 ////
 
 [#conversion]
-= Value Conversion While the <<ref_value>> container makes it easy to create ad-hoc structures, often it is necessary to convert between JSON and user-defined types or types from the standard library.
+= 值转换 虽然 &lt;<ref_value>&gt; 容器便于创建临时结构，但通常需要在 JSON 与用户定义类型或标准库中的类型之间进行转换。</ref_value>
 
-The function template <<ref_value_from>> provides an interface to construct a <<ref_value>> from a type `T`. The function template <<ref_value_to>> converts in the opposite direction, from a type `T` to <<ref_value>>. Both support a wide variety of different https://en.cppreference.com/w/cpp/language/types[fundamental types], such as `int` or `double`, standard library types, such as `std::string` or `std::vector<T>`, and can be extended to support user-defined types.
+函数模板 &lt;<ref_value_from>&gt; 提供了从类型 `T` 构造 &lt;<ref_value>&gt; 的接口。函数模板 &lt;<ref_value_to>&gt; 则进行相反方向的转换，从类型 `T` 转换为 &lt;<ref_value>&gt;。两者都支持多种不同的 https://en.cppreference.com/w/cpp/language/types[基础类型]，如 `int` 或 `double`，以及标准库类型，如 `std::string` 或 `std::vector<t>`，并且可扩展以支持用户定义类型。</t></ref_value></ref_value_to></ref_value></ref_value_from>
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_conv_1,indent=0]
 ----
 
-For the type `T`, the appropriate conversion approach is chosen from the following list of categories. The first matching category is selected.
+对于类型 `T`，将从以下类别列表中选择适当的转换方法。选择第一个匹配的类别。
 
 .Conversion categories
 [%autowidth,cols=4]
@@ -43,11 +43,11 @@ For the type `T`, the appropriate conversion approach is chosen from the followi
 
 |https://en.cppreference.com/w/cpp/types/is_arithmetic[Arithmetic type]
 |
-a| The result is a number equal to input and has the type
+a| 结果是一个等于输入的数字，其类型为
 
-* `std::int64_t`, if `T` is a signed integer'; or
-* `std::uint64_t`, if `T` is an unsigned integer; or
-* `double` otherwise.
+* `std::int64_t`，如果 `T` 是有符号整数；或
+* `std::uint64_t`，如果 `T` 是无符号整数；或
+* 否则为 `double`。
 |The result is created via <<ref_value_to_number>>.
 
 |Type satisfying <<ref_is_null_like>>
@@ -63,12 +63,12 @@ a| The result is a number equal to input and has the type
 |Type satisfying <<ref_is_variant_like>>.
 |`std::variant` and similar types, e.g. `boost::variant2::variant`.
 |The result is equal to the result of conversion of the active variant
-alternative. |The result holds the first alternative for which a conversion succeeds.
+备选项。| 结果包含第一个转换成功的备选项。
 
 |Type satisfying <<ref_is_optional_like>>
 |
 |If the input value is empty, the result is a `null`. Otherwise it is
-equivalent to conversion of the object stored inside of optional. |The result is default constructed if the input value is `null`. Otherwise the result is constructed from the result of conversion of the input to the type stored in optional.
+等价于对 optional 内部存储对象的转换。| 如果输入值为 `null`，则结果默认构造。否则，结果由输入值转换为 optional 中存储的类型的结果构造。
 
 |Type satisfying <<ref_is_map_like>>.
 |A one-to-one mapping (e.g. `std::map`) with string-like keys.
@@ -89,12 +89,12 @@ equivalent to conversion of the object stored inside of optional. |The result is
 |
 |The result is an <<ref_object>> with described members' names as keys.
 |The result is default-constructed and described members are assigned
-corresponding values.
+对应的值。
 
 |Type satisfying <<ref_is_described_enum>>
 |
 |If the input value is equal to one of the described enumerators, the result is
-a <<ref_string>>, containing its name. Otherwise it's equal to the input value converted to its underlying type. |The result is the described enumerator, corresponding to the input <<ref_string>>.
+一个 &lt;<ref_string>&gt;，包含其名称。否则，它等于输入值转换为其底层类型的结果。| 结果是描述的枚举项，与输入的 &lt;<ref_string>&gt; 相对应。</ref_string></ref_string>
 
 |Type satisfying <<ref_is_path_like>>.
 |`std::filesystem::path` and similar types, e.g. `boost::filesystem::path`.
@@ -102,14 +102,14 @@ a <<ref_string>>, containing its name. Otherwise it's equal to the input value c
 |The result is constructed from two pointers to `const char`.
 |===
 
-For composite types (sequences, tuples, described classes, etc.) conversion of contained objects is applied recursively. For example:
+对于复合类型（序列、元组、描述的类等），包含对象的转换递归应用。例如：
 
 [source]
 ----
 include::../../../test/snippets.cpp[tag=snippet_conv_recursive,indent=0]
 ----
 
-Here, the map is converted into an <<ref_object>>, since it matches <<ref_is_map_like>>. Each of its keys is converted into a <<ref_string>>, as `std::string` matches <<ref_is_string_like>>, and each of its values is converted into an <<ref_array>>, as `std::pair` matches <<ref_is_tuple_like>>. Finally, elements of pairs are converted into a `std::int64_t` number and a `bool`.
+此处，该映射被转换为 &lt;<ref_object>&gt;，因为它匹配 &lt;<ref_is_map_like>&gt;。其每个键被转换为 &lt;<ref_string>&gt;，因为 `std::string` 匹配 &lt;<ref_is_string_like>&gt;；每个值被转换为 &lt;<ref_array>&gt;，因为 `std::pair` 匹配 &lt;<ref_is_tuple_like>&gt;。最后，pair 的元素被转换为 `std::int64_t` 数字和 `bool`。</ref_is_tuple_like></ref_array></ref_is_string_like></ref_string></ref_is_map_like></ref_object>
 
 :leveloffset: +1
 
